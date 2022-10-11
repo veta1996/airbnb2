@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {useParams, Link} from 'react-router-dom'
-import NavBar from '../../utility/NavBar/NavBar'
 import axios from 'axios'
 import Spinner from '../../utility/Spinner/Spinner'
 import Venues from '../../utility/Venue/Venues'
+import { Box } from '@mui/material'
 
 function CityVenues() {
    let {cityName } = useParams()
@@ -26,12 +26,9 @@ function CityVenues() {
    }
 
   return (
-    <>
-        <NavBar/>
-        <div className='row'>
+        <Box>
             <Venues venues={venues} header={header}/>
-            </div>
-    </>
+        </Box>
   )
 }
 

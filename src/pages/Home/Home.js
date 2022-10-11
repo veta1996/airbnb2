@@ -1,12 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'
-import './Home.css';
 import Spinner from '../../utility/Spinner/Spinner';
 import SearchBox from '../Home/SearchBox'
-import NavBar from '../../utility/NavBar/NavBar'
 import Cities from '../../utility/City/Cities';
 import Activities from '../../utility/Activity/Activities';
 import Venues from '../../utility/Venue/Venues';
+import { Container, Grid } from '@mui/material';
+import { Box } from '@mui/system';
+import { styled } from '@mui/system'
+
+
+const BoxImage = styled(Box)(({theme})=> ({
+  [theme.breakpoints.up('sm')] : {
+    minHeight: '620px',
+    width: '100%',
+    marginBottom: '20px'
+  },
+  [theme.breakpoints.down('sm')] : {
+      height: '10%'
+  },
+  backgroundImage: 'url(https://a0.muscache.com/im/pictures/7e64c77a-29f3-49d7-9ce1-8e2270f67ef6.jpg?im_w=1680)',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  zIndex: 10,
+}))
 
 function Home() {
 
@@ -35,12 +53,8 @@ function Home() {
           const europeCitiesData = data[1].data
           const asiaCitiesData = data[2].data;
           const exoticCitiesData = data[3].data;
-
           setCities([citiesData, europeCitiesData, asiaCitiesData, exoticCitiesData]);
-          
         })
-        
-
         const activityUrl = `${window.apiHost}/activities/today`;
         const activity = await axios(activityUrl);
         setActivities(activity.data);
@@ -53,51 +67,54 @@ function Home() {
     getData();
     
   }, [])
-  //console.log(cities, "recommended cities from Home.js");
-  //console.log(activities, "activities")
-  //console.log(recVenues, "recVenues");
-
+ console.log(activities, "FROM HOME activities ")
   if(cities.length === 0){
     return <Spinner/>
   }
 
 
-    return (<>
-      <div className='container-fluid'>
-      <div className='row'>
-        <div className='home col s12'>
-          <div className='upper-fold'>
-            <NavBar/>
-            <SearchBox/>
-          </div>
-        </div>
-        <div className='container-fluid lower-fold'>
-          <div className='row'>
-                <div className='col s12'>
+    return (
+   <Container maxWidth="lg">
+    
+      <Box sx={{display: 'flex', flexDirection: 'row'}} maxWidth="lg">
+        <BoxImage>
+            <Box sx={{zIndex: '20'}}>
+              <SearchBox/>
+          </Box>
+        </BoxImage>
+      </Box>
+
+          <Container maxWidth="lg">
+          <Box>
+                <Box>
                   <Cities cities={cities[0]} header='Recommended cities for you'/>
-                </div>
-                <div className='col s12'>
+                </Box>
+               <Box>
                   <Activities activities={activities} header='Today in your area'/>
-                </div>
-                <div className='col s12'>
+                </Box>
+               <Box>
                   <Cities cities={cities[1].cities} header={cities[1].header}/>
-                </div>
-                <div className='col s12'>
+                </Box>
+               <Box>
                   <Venues venues={recVenues} header={recVenuesHeader}/>
-                </div>
-                <div className='col s12'>
+                </Box>
+               <Box sx={{marginY: 6}}>
                   <Cities cities={cities[2].cities} header={cities[2].header}/>
-                </div>
-                <div className='col s12'>
+                </Box>
+               <Box sx={{marginY: 6}}>
                   <Cities cities={cities[3].cities} header={cities[3].header}/>
-                </div>
-            </div>
-        </div>
-      </div>
-    </div> 
-    </>)
+                </Box>
+            </Box>
+        </Container>
+    </Container> 
+    )
   } 
   
 
 
 export default Home;
+
+/*
+<Box>
+                  <Cities cities={cities[1].cities} header={cities[1].header}/>
+                </Box>*/

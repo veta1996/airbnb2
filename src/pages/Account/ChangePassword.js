@@ -1,15 +1,51 @@
 import React, { useState } from 'react'
-import { Typography, Box, TextField, Button } from '@mui/material';
+import { Typography, Box, TextField, Button, Paper } from '@mui/material';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { styled } from '@mui/system'
 
 
-const style = {
-  width: '260px',
-  margin: "20px 0",
-};
-
+const ChangePasswordField = styled(TextField)(({theme})=> ({
+  margin: 8,
+  width: '300px',
+  '&:hover, &:active, &:focus': {
+      color: theme.palette.hof.main,
+      backgroundColor: 'transparent',
+      borderColor: theme.palette.hof.main,
+      boxShadow: 'none',
+    },
+    InputLabelProps: {
+      style: { color: theme.palette.hof.main },
+      shrink: true
+    },
+}))
+const ChangePasswordButton = styled(Button)(({theme})=> ({
+  width: '300px',
+  backgroundColor: '#FF385C',
+  color: '#FFFFFF',
+  margin: 20,
+  '&:hover': {
+   backgroundColor: '#FF385C'
+},
+}))
+const PaperPassword = styled(Paper)(({theme})=> ({
+  display: 'flex', 
+  flexDirection: 'column',
+  alignItems: 'center', 
+  justifyContent: 'center',
+  //background: "#ee9ca7", 
+  //background: "-webkit-linear-gradient(to right, #ffdde1, #ee9ca7)",  
+  //background: "linear-gradient(to right, #ffdde1, #ee9ca7)", 
+  [theme.breakpoints.up('sm')] : {
+      width: 'auto',
+      my: 8,
+      mx: 4,
+  },
+  [theme.breakpoints.down('sm')] : {
+      width: '400px',
+},
+}))
 function ChangePassword() {
 
   const token = useSelector(state => state.auth.token)
@@ -48,39 +84,28 @@ function ChangePassword() {
     }
   }
   return (
-    <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{
-            mt: 4,
-            width: '600px',
-            display: "flex",
-            flexDirection: 'column', 
-          }}
-          
-          autoComplete="off"
-    >
-      <Typography variant="h3">Change Your Password</Typography>
-             <TextField 
-            sx={style}
-            id="outlined-newpassword-input"
+    <Box>
+      <form onSubmit={handleSubmit}>
+      <PaperPassword elevation={8}>
+      <Typography variant="h6" sx={{margin: 3}}>Change Your Password</Typography>
+             <ChangePasswordField 
             label="New Password"
             type="password"
             autoComplete="current-password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
-           <TextField
-            sx={style}
-            id="outlined-confirmpassword-input"
+           <ChangePasswordField
             label="Confirm New Password"
             type="password"
             autoComplete="current-password"
             value={newPasConfirm}
             onChange={(e) => setNewPasConfirm(e.target.value)}
           />
-          <Button variant="contained" type="submit" sx={style}>Submit</Button>
-          </Box>
+          <ChangePasswordButton type='submit' fullWidth>Submit</ChangePasswordButton>
+          </PaperPassword>
+          </form>
+        </Box>
   )
 }
 

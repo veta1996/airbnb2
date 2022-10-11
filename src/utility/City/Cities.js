@@ -1,24 +1,22 @@
 import React from 'react'
 import City from './City'
-import SlickSlider from '../Slider/Slider'
-import NavBar from '../NavBar/NavBar'
+import Slider from '../Slider/Slider'
+import { Container, Grid, Typography } from '@mui/material'
 
-function Cities(props) {
-  //console.log(props, "from cities")
-  const citiesList =  props.cities.map((city, i) => {
+const Cities = ({cities, header}) => {
+  const citiesList =  cities.map((city, i) => {
       return(
-        <div className='col s3' key={i}>
+        <Grid item xs={12} sm={6} md={4} key={i}>
           <City city={city} key={i} />
-        </div>
+        </Grid>
       )
   })
   
   return(
-      <div className='cities-wrapper'>
-        <NavBar/>
-          <h1 className='main-header-text'>{props.header}</h1>
-            <SlickSlider elements={citiesList}/>
-      </div>
+    <Container maxWidth="lg">
+          <Typography variant='h5' sx={{fontWeight: 600, marginY: 2}}>{header}</Typography>
+              <Slider elements={citiesList}/>
+      </Container>
   )
 }
 

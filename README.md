@@ -68,3 +68,44 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+At this project, I have used the following API of robertbunch.
+Base API URL - https://airbnb-api.robertbunch.dev
+/cities/recommended
+
+/cities/:feature
+
+Available features:
+beach
+europe
+asia
+us
+exotic
+/city/:cityId
+
+/venues/recommended
+
+/venues/superHost
+
+/venue/:venueId
+
+/activities/today
+
+/activities/:feature
+
+scenery
+baking
+diving
+animals
+/activity/:id
+
+/seach/:searchTerm
+
+/points/get
+
+/users/signup -- expects: email,password -- errors: {msg:invalidData} or {msg: "userExists"} -- success: { msg: "userAdded", token, email, }
+
+/users/login -- expects: email, password -- errors: {msg: "badPass"} or {msg: "noEmail"} -- success: { msg: "userAdded", token, email, }
+
+/token-check -- expends: token -- errors: {msg: "invalidToken"} -- success: validatedToken

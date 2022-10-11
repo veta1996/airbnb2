@@ -8,7 +8,56 @@ import SignUpInputFields from './SignUpInputFields'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import regAction from '../../actions/regAction'
+import { Box, Button,  Divider,  TextField, Typography } from '@mui/material';
+import { styled } from '@mui/system'
+import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
+import GoogleIcon from '@mui/icons-material/Google';
+import { theme } from '../../theme/theme';
 
+const LoginBox = styled(Box)(({theme})=> ({
+    display: 'flex', 
+    flexDirection: 'column',
+    alignItems: 'center', 
+    my: 8,
+    mx: 4,
+    [theme.breakpoints.up('sm')] : {
+        width: '460px',
+    },
+    [theme.breakpoints.down('sm')] : {
+        width: '400px',
+  },
+}))
+
+const LoginButton = styled(Button)(({theme})=> ({
+    textTransform: 'none',
+    color: theme.palette.hof.main,
+    borderColor: theme.palette.hof.main,
+    borderRadius: 6,
+    padding: '6px 12px',
+    border: '1px solid',
+    lineHeight: 1.5,
+    margin: 4,
+    width: '300px',
+    '&:hover, &:active, &:focus': {
+        color: theme.palette.hof.main,
+        backgroundColor: 'transparent',
+        borderColor: theme.palette.hof.main,
+        boxShadow: 'none',
+      }
+}))
+
+
+const SignUpWithEmailButton = styled(Button)(({theme})=> ({
+    margin: 8,
+    width: '300px',
+    backgroundColor: '#FF385C',
+    color: '#FFFFFF',
+    padding: 8,
+    marginTop: 10,
+    '&:hover': {
+     backgroundColor: '#FF385C'
+ },
+}))
 
 function SignUp(props) {
     console.log(props, 'PROPS')
@@ -18,9 +67,9 @@ function SignUp(props) {
 
     useEffect(() => {
         setSignUpForm(
-            <button type='button'
+            <SignUpWithEmailButton type='button'
             onClick={showSignUpInputs}
-            className='sign-up-button'>Sign Up with Email</button>
+            variant='contained'>Sign Up with Email</SignUpWithEmailButton>
         )
     }, [])
 
@@ -38,7 +87,7 @@ function SignUp(props) {
         }
         //console.log(data, 'data')
         const resp = await axios.post(url, data)
-        //console.log(resp.data, 'resp DATA')
+        console.log(resp.data, 'resp DATA')
         //const token = resp.data.token;
         //console.log(token, 'token')
 
@@ -46,7 +95,7 @@ function SignUp(props) {
            Swal.fire({
                 title: "Email Exists",
                 text: "The email you provided is already registered. Please try another.",
-                icon: 'error'
+                icon: 'error',
             })
         } else if(resp.data.msg === 'invalidData'){
             Swal.fire({
@@ -68,19 +117,23 @@ function SignUp(props) {
  
 
   return (
-    <div className="login-form">
+    <Box>
     <form onSubmit={submitLogin}>
-        <button className="facebook-login">Connect With Facebook</button>
-        <button className="google-login">Connect With Google</button>
-        <div className="login-or center">
-            <span>or</span>
-            <div className="or-divider"></div>
-        </div>
-          {signUpForm}
-        <div className="divider"></div>
-        <div>Already have an account? <span onClick={() => props.openModal('open', <Login/>)} className="pointer">Log in</span></div>
-    </form>
-</div>
+    <LoginBox>
+       <Typography variant='h5' sx={{margin: 1}}>Sign up</Typography>
+       <Divider variant="middle" style={{width:'100%'}}/>
+       <Typography variant='h6' sx={{margin: 3}}>Welcome to Airbnb Clone</Typography>
+       <LoginButton variant='outlined' startIcon={<FacebookRoundedIcon/>} 
+       >Connect With Facebook</LoginButton>
+       <LoginButton variant='outlined' startIcon={<GoogleIcon/>}
+       >Connect With Google</LoginButton>
+           <Divider variant="middle" style={{width:'80%', margin: 3}}>or</Divider>
+         {signUpForm}
+       <Divider />
+       <Typography variant='body2' sx={{margin: 2}}>Already have an account? <span onClick={() => props.openModal('open', 'Login')} className="pointer">Log in</span></Typography>
+       </LoginBox>
+   </form>
+</Box>
   )
 }
 function mapStateToProps(state){

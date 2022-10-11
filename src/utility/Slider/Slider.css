@@ -1,9 +1,11 @@
+
 .slick .slick-prev:before, .slick .slick-next:before{
     font-size: 30px;
+
 }
 
 .slick .slick-arrow{
-    z-index: 100;
+    z-index: 200;
 }
 
 .slick .slick-arrow.slick-prev{
@@ -13,3 +15,34 @@
 .slick .slick-arrow.slick-next{
     right: 25px;
 }
+/*
+.slick-list {
+    margin: 0 -5px;
+}
+
+.slick-slide {
+    margin: 0 5px;
+}
+
+
+.slick-slide {
+    margin: 0 5px;
+    background: #ececec;
+    line-height: 94px;
+    text-align:center;
+    font-size: 2em;
+  }
+  
+  .slick-list {
+    margin: 0 -5px;
+  }
+  
+  .slick-slider {
+    overflow: hidden;
+  }
+  
+  .slick-prev,
+  .slick-next {
+    top: 25%;
+  }
+ */

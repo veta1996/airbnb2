@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, shallowEqual} from 'react-redux';
 import { connect } from 'react-redux'
 import { Routes, Route} from 'react-router-dom';
-import NavBar from '../../utility/NavBar/NavBar'
-import './Account.css'
 import AccountSideBar from './AccountSideBar'
 import moment from 'moment';
 import Bookings from './Bookings'
 import ChangePassword from './ChangePassword'
+import { Grid } from '@mui/material';
+import { Box } from '@mui/system';
+
 
 export const Account = (props) => {
 
@@ -38,15 +39,21 @@ export const Account = (props) => {
             setUpcomingBookings(upcomingBookings)
         }
         fetchAccountData()
-        console.log(pastBookings, "pastbooking")
     }, [])
 
   return (
-    <div className='account container-fluid'>
-      <NavBar/>
-        <AccountSideBar/>
-        <div className='row'>
-            <div className='col s8 offset-s3'>
+    <Grid container component="main" sx={{ height: '100vh' }}>
+        <Grid
+          item
+          xs={false}
+          sm={2}
+          md={3}
+        >
+            <AccountSideBar/>
+    
+    </Grid>
+    <Grid item xs={12} sm={10} md={9} square>
+        <Box sx={{marginX: 4}}>
               <Routes>
               <Route
                     path="*"
@@ -61,9 +68,9 @@ export const Account = (props) => {
                   <Route path="reservations/past" element={<Bookings type='past' booking={pastBookings}/>} />
                   <Route path="change-pass" element={<ChangePassword token={token}/>} />
                   </Routes>
-            </div>
-        </div>
-    </div>
+        </Box>
+        </Grid>
+    </Grid>
   )
 }
 
@@ -78,4 +85,3 @@ function mapDispatchToProps(){
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Account)
-

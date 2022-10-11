@@ -1,18 +1,21 @@
 import React from 'react'
-import './Activity.css'
 import Activity from './Activity'
+import { Container, Grid, Typography } from '@mui/material'
 
 const Activities = ({activities, header}) => {
-  //console.log(activities, header, 'props from activities')
+  console.log(activities, header, 'props from activities')
   const activitiesData = activities.map((activity, i) => {
-    return (<div key={i} className='col s2'>
-          <Activity activity={activity}/>
-      </div>)
+    return (
+            <Grid item key={i} xs={6} sm={4} md={4}>
+              <Activity activity={activity}/>
+          </Grid>)
   })
-  return <div className='activities'>
-    <h1 className='main-header-text'>{header}</h1>
-    {activitiesData}
-    </div>
+  return  (<Container sx={{py: 8}} maxWidth="lg">
+        <Typography variant='h5' sx={{fontWeight: 600, marginY: 2}}>{header}</Typography>
+            <Grid container spacing={2}>
+                {activitiesData}
+            </Grid>
+      </Container>)
 }
 
 export default Activities;

@@ -1,6 +1,6 @@
 import React from 'react'
-import './Venue.css'
 import Venue from './Venue'
+import { Grid, Typography, Container} from '@mui/material'
 
 
 const Venues = ({venues, header}) => {
@@ -8,17 +8,21 @@ const Venues = ({venues, header}) => {
     const venuesData = venues.map((venue, i)=>{
         
         return(
-            <div key={i} className="col m6 l3">
+            <Grid item key={i} xs={6} sm={4} md={3}>
                 <Venue venue={venue}/>
-            </div>
+            </Grid>
         )
     })
     return(
-        <div className="venues">
-            <h1 className="main-header-text">{header}</h1>
-            {venuesData}
-        </div>
+        <Container sx={{py: 8}} maxWidth="lg">
+            <Typography variant='h5' sx={{fontWeight: 600, marginY: 2}}>{header}</Typography>
+                <Grid container spacing={2}>
+                    {venuesData}
+                </Grid>
+        </Container>
+        
     )
 }
 
 export default Venues;
+
