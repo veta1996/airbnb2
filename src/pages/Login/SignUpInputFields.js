@@ -1,6 +1,6 @@
 import React from 'react'
 import './Login.css'
-import { Box, Button,  Divider,  TextField, Typography } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { styled } from '@mui/system'
 import { theme } from '../../theme/theme';
 
@@ -64,6 +64,16 @@ function SignUpInputFields(props) {
                   shrink: true
                  }}
                 onChange={(e) => props.setPassword(e.target.value)}/>
+                <LoginTextField
+                 required
+                 type="password" 
+                 placeholder="Confirm Password" 
+                  label="Confirm Password"
+                InputLabelProps={{
+                  style: { color: theme.palette.hof.main },
+                  shrink: true
+                 }}
+                 onChange={(e) => props.setConfirmPassword(e.target.value)}/>
                 <SubmitLoginButton type='submit' fullWidth>Sign Up</SubmitLoginButton>
         
         </LoginBox>

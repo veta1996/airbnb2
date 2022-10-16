@@ -8,7 +8,8 @@ const Amenities = ({amenity}) => {
             <ListItemText sx={{display: 'flex'}}>
             {amenity}
             </ListItemText>
-    </ListItem></List>
+    </ListItem>
+    </List>
   )
 }
 

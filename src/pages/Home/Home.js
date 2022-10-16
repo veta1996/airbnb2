@@ -12,6 +12,8 @@ import { styled } from '@mui/system'
 
 const BoxImage = styled(Box)(({theme})=> ({
   [theme.breakpoints.up('sm')] : {
+    display: 'flex',
+    alignItems: 'center',
     minHeight: '620px',
     width: '100%',
     marginBottom: '20px'
@@ -67,15 +69,11 @@ function Home() {
     getData();
     
   }, [])
- console.log(activities, "FROM HOME activities ")
   if(cities.length === 0){
     return <Spinner/>
   }
-
-
     return (
    <Container maxWidth="lg">
-    
       <Box sx={{display: 'flex', flexDirection: 'row'}} maxWidth="lg">
         <BoxImage>
             <Box sx={{zIndex: '20'}}>
@@ -83,8 +81,6 @@ function Home() {
           </Box>
         </BoxImage>
       </Box>
-
-          <Container maxWidth="lg">
           <Box>
                 <Box>
                   <Cities cities={cities[0]} header='Recommended cities for you'/>
@@ -105,7 +101,7 @@ function Home() {
                   <Cities cities={cities[3].cities} header={cities[3].header}/>
                 </Box>
             </Box>
-        </Container>
+       
     </Container> 
     )
   } 

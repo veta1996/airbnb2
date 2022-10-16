@@ -1,6 +1,6 @@
 import React from 'react'
 import Venue from './Venue'
-import { Grid, Typography, Container} from '@mui/material'
+import { Grid, Typography, Box} from '@mui/material'
 
 
 const Venues = ({venues, header}) => {
@@ -14,12 +14,12 @@ const Venues = ({venues, header}) => {
         )
     })
     return(
-        <Container sx={{py: 8}} maxWidth="lg">
+        <Box sx={{py: 8}} maxWidth="lg">
             <Typography variant='h5' sx={{fontWeight: 600, marginY: 2}}>{header}</Typography>
                 <Grid container spacing={2}>
                     {venuesData}
                 </Grid>
-        </Container>
+        </Box>
         
     )
 }

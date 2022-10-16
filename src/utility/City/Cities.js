@@ -1,7 +1,7 @@
 import React from 'react'
 import City from './City'
 import Slider from '../Slider/Slider'
-import { Container, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 
 const Cities = ({cities, header}) => {
   const citiesList =  cities.map((city, i) => {
@@ -13,10 +13,10 @@ const Cities = ({cities, header}) => {
   })
   
   return(
-    <Container maxWidth="lg">
+      <Box>
           <Typography variant='h5' sx={{fontWeight: 600, marginY: 2}}>{header}</Typography>
               <Slider elements={citiesList}/>
-      </Container>
+      </Box>
   )
 }
 

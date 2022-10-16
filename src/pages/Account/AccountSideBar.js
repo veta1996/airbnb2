@@ -1,9 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import { Box, Button, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar,  } from '@mui/material'
+import { Box, Button, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material'
 import { Password} from '@mui/icons-material';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
-import ListIcon from '@mui/icons-material/List';
 import styled from '@emotion/styled';
 
 const SideBarBox = styled(Box)((({theme}) => ({
@@ -65,16 +64,6 @@ function AccountSideBar(props) {
                 </ListItem>
          
          <Divider/>
-    
-            <ListItem disablePadding component={Link} to="reservations/past" style={{color: '#484848'}}>
-                <ListItemButton>
-                <ListItemIcon>
-                    <ListIcon />
-                </ListItemIcon>
-                <ListItemText primary="Past Reservations" />
-                </ListItemButton>
-            </ListItem>
-        <Divider/>
          
           <ListItem disablePadding component={Link} to="change-pass" style={{color: '#484848'}}>
             <ListItemButton>
@@ -90,7 +79,6 @@ function AccountSideBar(props) {
 
         <AccountSideButtonGroup variant="contained">
             <ButtonGroupMobile component={Link} to="reservations/confirmed">Confirmed Reservations</ButtonGroupMobile>
-            <ButtonGroupMobile component={Link} to="reservations/past">Past Reservations</ButtonGroupMobile>
             <ButtonGroupMobile component={Link} to="change-pass">Change Password</ButtonGroupMobile>
         </AccountSideButtonGroup>
         </>
@@ -99,23 +87,3 @@ function AccountSideBar(props) {
 
 export default AccountSideBar
 
-{/*
-<Divider orientation="vertical" flexItem />
- <ul className="sidenav sidenav-fixed">
-            <li>
-                <div className="user-view valign-wrapper center-align">
-                    <img className="" src="https://airbnb-clone-prexel-images.s3.amazonaws.com/genericAvatar.png" alt="profile" />
-                </div>
-            </li>
-            <li>
-                <Link to="reservations/confirmed">Confirmed Reservations</Link>
-            </li>
-            <li>
-                <Link to="reservations/past">Past Reservations</Link>
-            </li>
-            <li>
-                <Link to="change-pass">Change Password</Link>
-            </li>
-            </ul>
-        
-        */}

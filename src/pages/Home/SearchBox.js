@@ -10,10 +10,9 @@ import { theme } from '../../theme/theme';
 const SearchStyledStack = styled(Box)(({theme})=> ({
   [theme.breakpoints.up('sm')] : {
     maxWidth: '360px',
-    borderRadius: '16px',
+    borderRadius: 3,
     boxShadow: '2px 2px 6px #767676',
-    marginLeft: '40px',
-    marginTop: '30px',
+    marginLeft: '60px',
     padding: '30px',
   },
   [theme.breakpoints.down('sm')] : {
@@ -48,12 +47,6 @@ const SearchButton = styled(Button)(({theme})=> ({
 
 function SearchBox(props) {
   const where = useControlledInput('');
-  //const [checkOut, setCheckOut] = useState('')
-  //const [checkIn, setCheckIn] = useState('');
-  const checkOut = useControlledInput('');
-  const checkIn = useControlledInput('');
-  const adults = useControlledInput('');
-  const children = useControlledInput('');
   let navigate = useNavigate();
 
   const submitSearch = (e) => {
@@ -83,40 +76,6 @@ function SearchBox(props) {
               shrink: true
             }}
             />
-          <Stack direction='row' spacing={0.5} pt={2}>
-          <TextField 
-          type='date'
-          fullWidth
-          label="Check In"
-          InputLabelProps={{
-            style: { color: theme.palette.hof.main },
-            shrink: true
-          }}
-            {...checkIn}/>
-
-           <TextField 
-           type='date'
-           fullWidth
-           label="Check Out"
-           InputLabelProps={{
-             style: { color: theme.palette.hof.main },
-             shrink: true
-           }}
-            {...checkOut}/>
-          
-         </Stack>
-         <Stack direction='row' pt={2}>
-            <TextField  
-            fullWidth
-            type='number'
-            label='Adults'
-            placeholder="2"
-            InputLabelProps={{
-              style: { color: theme.palette.hof.main },
-              shrink: true
-            }}
-            {...adults}/>
-         </Stack>
             <SearchButton type='submit' fullWidth>Search</SearchButton>
           </form>
       </Box>
@@ -243,4 +202,39 @@ function SearchBox(props) {
     </SearchStyledStack>
   )
 }
+
+ <Stack direction='row' spacing={0.5} pt={2}>
+          <TextField 
+          type='date'
+          fullWidth
+          label="Check In"
+          InputLabelProps={{
+            style: { color: theme.palette.hof.main },
+            shrink: true
+          }}
+            {...checkIn}/>
+
+           <TextField 
+           type='date'
+           fullWidth
+           label="Check Out"
+           InputLabelProps={{
+             style: { color: theme.palette.hof.main },
+             shrink: true
+           }}
+            {...checkOut}/>
+          
+         </Stack>
+         <Stack direction='row' pt={2}>
+            <TextField  
+            fullWidth
+            type='number'
+            label='Adults'
+            placeholder="2"
+            InputLabelProps={{
+              style: { color: theme.palette.hof.main },
+              shrink: true
+            }}
+            {...adults}/>
+         </Stack>
   */}

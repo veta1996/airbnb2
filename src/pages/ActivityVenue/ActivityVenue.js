@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import avatar from '../../../src/images/avatar3.png'
 import image3 from '../../../src/images/image3.jpeg'
@@ -12,18 +12,15 @@ import { bindActionCreators } from 'redux';
 import openModal from '../../actions/openModal';
 import moment from 'moment'
 import Swal from 'sweetalert2';
-import loadScript from '../../utilityFunctions/loadScript';
 import { Container, styled } from '@mui/system'
 import { theme } from '../../theme/theme';
-import { Avatar, Box, Divider, Grid, Paper, Stack, TextField, Typography, Button, ImageList, ImageListItem, ButtonGroup } from '@mui/material';
+import { Avatar, Box, Divider, Grid, Paper, Stack, TextField, Typography, Button} from '@mui/material';
 import { List, ListItem, ListItemText, ListItemIcon  } from '@mui/material'
 import StarOutlineTwoToneIcon from '@mui/icons-material/StarOutlineTwoTone';
 import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
 import DateRangeTwoToneIcon from '@mui/icons-material/DateRangeTwoTone';
 import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
-import { LocalizationProvider } from '@mui/x-date-pickers'
-import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
+
 
 
 const TitleText = styled(Typography)(({theme})=> ({
@@ -50,15 +47,13 @@ const ActivityVenue = (props) => {
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
     const [numberOfGuests, setNumberOfGuests] = useState('');
-    const [value, setValue] = React.useState([checkIn, checkOut]);
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getData = async() =>{
              const url = `${window.apiHost}/activity/${vid}`;
              const axiosRes = await axios.get(url);
              const singleActivityData = axiosRes.data;
- 
              setSingleActivity(singleActivityData);
              console.log(singleActivityData, 'singleActivityData')
          }
@@ -80,13 +75,27 @@ const ActivityVenue = (props) => {
                 icon: 'error',
                 title: "Please check if your dates are valid", 
             })
-        } else {
-            Swal.fire({
-                icon: 'warning',
-                title: "This path doesn't work till the checkout stage due to API limit", 
-            })
+        } else if(!numberOfGuests){
+          Swal.fire({
+              icon: 'error',
+              title: "Please check the number of guests", 
+          })
+      }else {
+          const pricePerNight = singleActivity.cost;
+          const totalPrice = diffDays * pricePerNight;
+          const data = {
+              venueData: singleActivity,
+              totalPrice,
+              diffDays,
+              pricePerNight,
+              checkIn: checkIn,
+              checkOut: checkOut,
+              token: token,
+              numberOfGuests: numberOfGuests,
+              currency: 'USD',
+          }
+         navigate(`/payment-success-activity/${token}`, {state: data})
         }
-        console.log(value)
     }
 
   return (
@@ -116,7 +125,7 @@ const ActivityVenue = (props) => {
  <Grid container component="main" sx={{ height: '100vh' }}>
  <Grid
    item
-   xs={0}
+   xs={12}
    sm={8}
    md={8}
  >
@@ -232,7 +241,7 @@ const ActivityVenue = (props) => {
 
 <Grid
    item
-   xs={4}
+   xs={12}
    sm={4}
    md={4}
  >
@@ -313,49 +322,3 @@ const ActivityVenue = (props) => {
     }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActivityVenue)
-
-/*
-
-<Box sx={{display: 'flex', flexDirection: 'row'}}>
-      
-      <Paper component='img' src={singleActivity.image} alt={singleActivity.title} 
-      sx={{borderRadius: 3, maxWidth: '300px', maxHeight: '700px', display: 'flex', flexDirection: 'column' }}/>
-    <Box sx={{display: 'flex', flexDirection: 'column'}}>
-        <Paper component='img' src={image1} alt={singleActivity.title} 
-        sx={{borderRadius: 3, maxWidth: '300px' }}/>
-       
-        <Paper component='img' src={image2} alt={singleActivity.title} 
-        sx={{borderRadius: 3, maxWidth: '300px'}}/>
-    </Box>
-    <Paper component='img' src={image7} alt={singleActivity.title} 
-      sx={{borderRadius: 3, maxWidth: '300px', maxHeight: '700px', display: 'flex', flexDirection: 'column' }}/>
-    
-</Box>
-
-
-
-  <Stack direction='row' spacing={0.5} pt={2}>
-      <TextField
-      component='button'
-      type='date'
-      fullWidth
-      label="Check In"
-      InputLabelProps={{
-        style: { color: theme.palette.hof.main },
-        shrink: true
-      }}
-      value={checkIn} 
-      onChange={(e)=>setCheckIn(e.target.value)}/>
-
-       <TextField 
-       component='button'
-       type='date'
-       fullWidth
-       label="Check Out"
-       InputLabelProps={{
-         style: { color: theme.palette.hof.main },
-         shrink: true
-       }}
-       value={checkOut} 
-       onChange={(e)=>setCheckOut(e.target.value)}/>
-     </Stack>*/

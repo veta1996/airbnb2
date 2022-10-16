@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import avatar from '../../../src/images/avatar2.png'
 import axios from 'axios'
 import Point from './Point';
@@ -10,7 +10,6 @@ import { bindActionCreators } from 'redux';
 import openModal from '../../actions/openModal';
 import moment from 'moment'
 import Swal from 'sweetalert2';
-import loadScript from '../../utilityFunctions/loadScript';
 import { Container, styled } from '@mui/system'
 import { theme } from '../../theme/theme';
 import { Avatar, Box, Divider, Grid, Paper, Stack, TextField, Typography, Button } from '@mui/material';
@@ -30,6 +29,7 @@ const ReserveButton = styled(Button)(({theme})=> ({
  },
 }))
 function SingleFullVenue(props) {
+    console.log(props, 'props for SINGLE fULL VENUE')
  const token = useSelector(state => state.auth.token);
  const {vid} = useParams();
  const [singleVenue, setSingleVenue] = useState({});
@@ -38,7 +38,7 @@ function SingleFullVenue(props) {
  const [checkIn, setCheckIn] = useState('');
  const [checkOut, setCheckOut] = useState('');
  const [numberOfGuests, setNumberOfGuests] = useState('');
- 
+ const navigate = useNavigate()
 
     useEffect(() => {
        const getData = async() =>{
@@ -64,7 +64,6 @@ function SingleFullVenue(props) {
     }, [])
 
     const reserveNow = async(e) => {
-        
         const startDateMoment = moment(checkIn)
         const endDateMoment = moment(checkOut)
         const diffDays = endDateMoment.diff(startDateMoment, 'days')
@@ -78,14 +77,14 @@ function SingleFullVenue(props) {
                 icon: 'error',
                 title: "Please check if your dates are valid", 
             })
-        } else {
+        }else if(!numberOfGuests){
+            Swal.fire({
+                icon: 'error',
+                title: "Please check the number of guests", 
+            })
+        }else {
             const pricePerNight = singleVenue.pricePerNight;
             const totalPrice = diffDays * pricePerNight;
-            const stripePublicKey = 'pk_test_5198HtPL5CfCPYJ3X8TTrO06ChWxotTw6Sm2el4WkYdrfN5Rh7vEuVguXyPrTezvm3ntblRX8TpjAHeMQfHkEpTA600waD2fMrT';
-            const scriptUrl = 'https://js.stripe.com/v3'
-            await loadScript(scriptUrl)
-            const stripe = window.Stripe(stripePublicKey)
-            const stripeSessionUrl = `${window.apiHost}/payment/create-session`;
             const data = {
                 venueData: singleVenue,
                 totalPrice,
@@ -97,18 +96,10 @@ function SingleFullVenue(props) {
                 numberOfGuests: numberOfGuests,
                 currency: 'USD',
             }
-            const sessionVar = await axios.post(stripeSessionUrl,data);
-            console.log(sessionVar.data, 'sessionVar.data');
-            stripe.redirectToCheckout({
-                sessionId: sessionVar.data.id,
-            }).then((result)=>{
-                console.log(result);
-                //if the network fails, this will run
-            })
+           navigate(`/payment-success/${token}`, {state: data})
         }
-
     }
-   
+
     const loginInAction = () => {
         props.openModal('open', <Login/>)
         console.log(token)
@@ -132,12 +123,11 @@ function SingleFullVenue(props) {
                 <Typography>{singleVenue.location}</Typography>
             </Box>
         </Box>
-        <Box component='img' src={singleVenue.imageUrl} alt={singleVenue.title} sx={{ width: '80%', borderRadius: '20px' }}/>
-    
+        <Box component='img' src={singleVenue.imageUrl} alt={singleVenue.title} sx={{ width: '100%', maxHeight: '550px', borderRadius: '20px' }}/>
      <Grid container component="main" sx={{ height: '100vh' }}>
      <Grid
        item
-       xs={8}
+       xs={12}
        sm={8}
        md={8}
      >
@@ -170,12 +160,12 @@ function SingleFullVenue(props) {
  
  <Grid
        item
-       xs={4}
+       xs={12}
        sm={4}
        md={4}
      >
 
-        <Paper elevation={6} sx={{padding: 4, marginTop: 4}}>
+        <Paper elevation={6} sx={{padding: 4, marginY: 4}}>
         <Box sx={{display: 'flex', flexDirection: "row", color: "#484848", fontWeight: 800, justifyContent: 'space-between', paddingBottom: 2}}>
             <Typography style={{fontSize: '18px', fontWeight: 700}}>${singleVenue.pricePerNight} <Typography component='span' variant='body2'>night</Typography></Typography>
             <Box sx={{display: 'flex', flexDirection: "row"}}>
@@ -247,40 +237,3 @@ function mapDispatchToProps(dispatcher){
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleFullVenue)
 
-/*
- <div className='col s8 location-details offset-s2'>
-            
-
-            <div className='col s4 right-details'>
-                <div className='price-per-day'>${singleVenue.pricePerNight}/per night</div>
-                <div className='rating'>Rating: {singleVenue.rating}</div>
-                <div className='col s6'>
-                    Check-In
-                    <input type='date' value={checkIn} onChange={(e)=>setCheckIn(e.target.value)} />
-                </div>
-                <div className='col s6'>
-                    Check-Out
-                    <input type='date' value={checkOut} onChange={(e)=>setCheckOut(e.target.value)}/>
-                </div>
-
-                <div className='col s12'>
-                    <select className='browser-default' value={numberOfGuests} onChange={(e)=>setNumberOfGuests(e.target.value)}>
-                        <option value='1'>1 Guest</option>
-                        <option value='2'>2 Guests</option>
-                        <option value='3'>3 Guests</option>
-                        <option value='4'>4 Guests</option>
-                        <option value='5'>5 Guests</option>
-                        <option value='6'>6 Guests</option>
-                        <option value='7'>7 Guests</option>
-                        <option value='8'>8 Guests</option>
-                    </select>
-                </div>
-                <div className='col s12 center'>
-                    {token ? 
-                    <button className='btn red accent-2' onClick={reserveNow}>Reserve</button> :
-                    <div>You must <span className='text-link' onClick={() => {props.openModal('open', <Login/>)}}>Log In</span> to reserve</div>
-                    }
-                    
-                </div>
-            </div>
-        </div>*/

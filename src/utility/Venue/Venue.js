@@ -25,7 +25,7 @@ const Venue = ({venue}) => {
                     {venue.title.charAt(0).toUpperCase() + venue.title.slice(1)}
                     </Typography>
                     <Typography variant='body1' style={{ color: "#484848"}}>
-                    <span style={{ fontWeight: 800}}>${venue.pricePerNight}</span> night
+                    <Typography component='span' style={{ fontWeight: 800}}>${venue.pricePerNight}</Typography> night
                     </Typography>
                </CardContent>
                 

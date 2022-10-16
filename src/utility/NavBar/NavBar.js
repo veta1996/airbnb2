@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { AppBar, Divider } from '@mui/material'
 import { styled } from '@mui/system'
-import Logo from '../../images/airbnb-logos-495225.png'
+import Logo1 from '../../images/logo.png'
 import { Box } from '@mui/system'
 import { Menu } from '@mui/material'
 import { MenuItem } from '@mui/material'
@@ -81,13 +81,13 @@ function NavBar(props) {
     <AppBar position='static' elevation={0} sx={{marginTop: 1}}>
         <StyledToolBar>
             <Link to="/">
-                <img src={Logo} alt="Logo" style={{width: 120, marginTop: 4}}/>
+                <img src={Logo1} alt="Logo" style={{width: 120, marginTop: 4}}/>
             </Link>
                 <UserBox>
                     <MenuButton href='/'>Become a host</MenuButton>
                     <MenuButton href='/'>Help</MenuButton>
                 { email ? <Box>
-                            <MenuButton color='error' component={Link} to="/account">Hey, {email}</MenuButton>
+                            <MenuButton color='error' component={Link} to="account/reservations/confirmed">Hey, {email}</MenuButton>
                             <MenuButton  onClick={() => dispatch(logoutAction())}>Log out</MenuButton>
                         </Box>
                             : <Box> 
@@ -113,7 +113,7 @@ function NavBar(props) {
                     <MenuItem onClick={handleClose}>English (US)</MenuItem>
                     <MenuItem onClick={handleClose}>Help</MenuItem>
                     { email ? <Box>
-                                <MenuItem onClick={handleClose}><Link to="/account" style={{ textDecoration: 'inherit', color: '#484848', fontWeight: 'normal'}}>Hey, {email}</Link></MenuItem>
+                                <MenuItem onClick={handleClose}><Link to="account/reservations/confirmed" style={{ textDecoration: 'inherit', color: '#484848', fontWeight: 'normal'}}>Hey, {email}</Link></MenuItem>
                                 <MenuItem onClick={() => {dispatch(logoutAction()); handleClose()}}>Log Out</MenuItem>
                                 </Box>
                                 : <Box> 

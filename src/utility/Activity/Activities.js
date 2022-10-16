@@ -1,6 +1,6 @@
 import React from 'react'
 import Activity from './Activity'
-import { Container, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 
 const Activities = ({activities, header}) => {
   console.log(activities, header, 'props from activities')
@@ -10,12 +10,12 @@ const Activities = ({activities, header}) => {
               <Activity activity={activity}/>
           </Grid>)
   })
-  return  (<Container sx={{py: 8}} maxWidth="lg">
+  return  (<Box sx={{py: 8}} maxWidth="lg">
         <Typography variant='h5' sx={{fontWeight: 600, marginY: 2}}>{header}</Typography>
             <Grid container spacing={2}>
                 {activitiesData}
             </Grid>
-      </Container>)
+      </Box>)
 }
 
 export default Activities;

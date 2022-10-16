@@ -10,7 +10,8 @@ const Home = lazy(() => import('./pages/Home/Home'))
 const SingleFullVenue = lazy(() => import('./pages/SingleFullVenue/SingleFullVenue'))
 const Modal = lazy(() => import('./utility/Modal/ModalWindow'))
 const CityVenues = lazy(() => import('./pages/CityVenues/CityVenues'))
-const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess/PaymentSuccess'))
+const PaymentPage = lazy(() => import('./pages/PaymentSuccess/PaymentPage'))
+const PaymentPageActivity = lazy(() => import('./pages/PaymentSuccess/PaymentPageActivity'))
 const Account = lazy(() => import('./pages/Account/Account'))
 const Search = lazy(() => import('./pages/Search/Search'))
 const ActivityVenue = lazy(() => import('./pages/ActivityVenue/ActivityVenue'))
@@ -29,7 +30,8 @@ function App() {
                 <Route path="/venue/:vid" element={<><Modal/><SingleFullVenue/></>}/>
                 <Route path="/activity/:vid" element={<><Modal/><ActivityVenue/></>}/>
                 <Route path="/city/:cityName" element={<CityVenues/>}/>
-                <Route path="/payment-success/:stripeToken" element={<PaymentSuccess/>}/>
+                <Route path="/payment-success/:stripeToken" element={<PaymentPage/>}/>
+                <Route path="/payment-success-activity/:stripeToken" element={<PaymentPageActivity/>}/>
                 <Route path="/account/*" element={<Account/>}/>
                 <Route path='/search/:searchId' element={<Search/>}/>
               </Routes>
