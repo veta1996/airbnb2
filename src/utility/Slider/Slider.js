@@ -49,9 +49,3 @@ const Slider = (props) => {
 
 export default Slider
 
-/*
-<div className='slick'>
-        <SlickSlider {...settings}>
-            {props.elements}
-        </SlickSlider>
-    </div>*/

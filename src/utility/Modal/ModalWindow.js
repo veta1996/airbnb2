@@ -12,7 +12,6 @@ import { Dialog } from '@mui/material';
 
 
 const ModalWindow = ({siteModal, openModal}) => {
-    console.log(siteModal, openModal, 'from ModalWindow')
     const [openModalWindow, setOpenModalWindow] = useState(`${siteModal.openClose === 'open' ? true : false}`)
     const handleClose = () => {
        setOpenModalWindow(`${siteModal.openClose === 'closed' ? true : false}`);
